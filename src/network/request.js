@@ -1,9 +1,24 @@
 import axios from 'axios'
 import $store from '@/store/index'
 
-const baseURL="http://localhost:3000";
+// const baseURL="http://localhost:3000";
 // const baseURL="http://59.110.124.156:3000";
 // const baseURL="http://123.56.175.108:3000"
+
+let baseURL = "";
+if (process.env.NODE_ENV === "development") {
+    if (process.env.VUE_APP_NETEASE_API_URL_DEV === undefined) {
+        baseURL = "http://localhost:3000";
+    } else {
+        baseURL = process.env.VUE_APP_NETEASE_API_URL_DEV;
+    }
+} else {
+    if (process.env.VUE_APP_NETEASE_API_URL === undefined) {
+        baseURL = "https://neteasecloudmusicapi-docs.4everland.app/";
+    } else {
+        baseURL = process.env.VUE_APP_NETEASE_API_URL;
+    }
+}
 
 let ajaxTimer = 0;
 export function request(config) {
